@@ -1,9 +1,0 @@
-{
-  "platforms": ["android", "ios"],
-  "android": {
-    "modules": ["com.scrodo.pdfthumbnail.ScrodoPdfThumbnailModule"]
-  },
-  "ios": {
-    "modules": ["ScrodoPdfThumbnailModule"]
-  }
-}
