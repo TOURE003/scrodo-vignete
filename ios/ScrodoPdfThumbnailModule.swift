@@ -1,6 +1,7 @@
 import Foundation
 import PDFKit
 import UIKit
+import React
 
 @objc(ScrodoPdfThumbnailModule)
 class ScrodoPdfThumbnailModule: NSObject {
