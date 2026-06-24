@@ -1,66 +1,63 @@
 # scrodo-pdf-thumbnail
 
-Module React Native natif pour générer un thumbnail JPEG de n'importe quelle page d'un PDF.
-
-- **Android** : utilise `PdfRenderer` (API Android native, aucune dépendance externe)
-- **iOS** : utilise `PDFKit` (framework Apple natif, aucune dépendance externe)
-- Compatible **Expo SDK 56+**, **React Native 0.85+**
-- Zéro conflit de dépendances
+Génère une miniature JPEG de n'importe quelle page d'un PDF.  
+Fonctionne sur **Android** (PdfRenderer) et **iOS** (PDFKit).
 
 ## Installation
 
 ```bash
-npm install github:TON_USERNAME/scrodo-pdf-thumbnail
-```
-
-Puis rebuild l'app (obligatoire pour les modules natifs) :
-
-```bash
-eas build --platform android
+npm install scrodo-pdf-thumbnail
 # ou
-npx expo run:android
+yarn add scrodo-pdf-thumbnail
 ```
+
+### iOS
+```bash
+cd ios && pod install
+```
+
+### Android
+Aucune étape supplémentaire (autolink).
+
+---
 
 ## Utilisation
 
 ```typescript
 import ScrodoPdfThumbnail from 'scrodo-pdf-thumbnail';
 
-const result = await ScrodoPdfThumbnail.generate(pdfUri, 1, 80);
-// result.uri    → chemin vers le JPEG généré
-// result.width  → largeur en pixels
-// result.height → hauteur en pixels
+const { uri, width, height } = await ScrodoPdfThumbnail.generate(
+  pdfUri,   // string : URI du PDF (file://, content://, chemin absolu)
+  1,        // number : numéro de page (commence à 1)
+  80        // number : qualité JPEG 0-100
+);
 ```
 
-### Paramètres
+---
 
-| Paramètre | Type | Défaut | Description |
-|-----------|------|--------|-------------|
-| `pdfUri` | `string` | — | URI du PDF (`file://`, `content://`, chemin absolu) |
-| `page` | `number` | `1` | Numéro de page (base 1) |
-| `quality` | `number` | `80` | Qualité JPEG (0-100) |
+## Structure des fichiers
 
-## Exemple complet
-
-```typescript
-import ScrodoPdfThumbnail from 'scrodo-pdf-thumbnail';
-
-export default async function pdfToImage(pdfUri: string) {
-  try {
-    const { uri, width, height } = await ScrodoPdfThumbnail.generate(pdfUri, 1, 80);
-    return {
-      succes: true,
-      error: null,
-      message: "Image générée",
-      data: { page0: uri, doc: [{ uri, width, height }] }
-    };
-  } catch (e) {
-    return {
-      succes: false,
-      error: e,
-      message: "Impossible de générer l'aperçu.",
-      data: { page0: null, doc: null }
-    };
-  }
-}
 ```
+scrodo-pdf-thumbnail/
+├── src/
+│   ├── index.js          ← point d'entrée JS
+│   └── index.d.ts        ← types TypeScript
+├── ios/
+│   ├── ScrodoPdfThumbnail.m      ← bridge ObjC (obligatoire pour Swift)
+│   └── ScrodoPdfThumbnail.swift  ← implémentation PDFKit
+├── android/
+│   └── src/main/java/com/scrodo/pdfthumbnail/
+│       ├── ScrodoPdfThumbnailModule.kt   ← implémentation PdfRenderer
+│       └── ScrodoPdfThumbnailPackage.kt  ← enregistrement du module
+├── scrodo-pdf-thumbnail.podspec
+├── react-native.config.js
+└── package.json
+```
+
+---
+
+## Pourquoi un fichier `.m` sur iOS ?
+
+Swift ne peut pas être exposé directement à React Native.  
+Le fichier `ScrodoPdfThumbnail.m` (Objective-C) fait le pont entre Swift et le bridge JS de React Native.  
+Sans lui, le module n'est pas trouvé → erreur "module natif non lié".

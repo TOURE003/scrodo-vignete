@@ -1,8 +1,11 @@
 import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
-  "scrodo-pdf-thumbnail: module natif non lié. " +
-  "Rebuilde l'app après installation.";
+  "scrodo-pdf-thumbnail: module natif non lié.\n" +
+  "Rebuilde l'app après installation :\n" +
+  (Platform.OS === 'ios'
+    ? "  cd ios && pod install && cd ..\n  npx expo run:ios\n"
+    : "  npx expo run:android\n");
 
 const ScrodoPdfThumbnail = NativeModules.ScrodoPdfThumbnail
   ? NativeModules.ScrodoPdfThumbnail
@@ -15,24 +18,16 @@ const ScrodoPdfThumbnail = NativeModules.ScrodoPdfThumbnail
       }
     );
 
-export interface ThumbnailResult {
-  uri: string;
-  width: number;
-  height: number;
-}
-
 /**
- * Génère un thumbnail JPEG de la première page d'un PDF
- * @param pdfUri - URI du fichier PDF (file://, content://)
- * @param page   - Numéro de page, base 1 (défaut: 1)
- * @param quality - Qualité JPEG 0-100 (défaut: 80)
+ * Génère une miniature JPEG d'une page d'un fichier PDF.
+ *
+ * @param pdfUri  URI du fichier PDF (file://, content://, ou chemin absolu)
+ * @param page    Numéro de page (commence à 1)
+ * @param quality Qualité JPEG de 0 à 100
+ * @returns       { uri: string, width: number, height: number }
  */
-export async function generate(
-  pdfUri: string,
-  page: number = 1,
-  quality: number = 80
-): Promise<ThumbnailResult> {
+export function generate(pdfUri, page, quality) {
   return ScrodoPdfThumbnail.generate(pdfUri, page, quality);
 }
 
-export default { generate };
+export default ScrodoPdfThumbnail;

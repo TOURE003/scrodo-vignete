@@ -1,20 +1,20 @@
 {
   "name": "scrodo-pdf-thumbnail",
   "version": "1.0.0",
-  "description": "Expo native module to generate PDF page thumbnails on Android and iOS",
+  "description": "Génère une miniature JPEG de la première page d'un PDF (Android & iOS)",
   "main": "src/index.js",
   "types": "src/index.d.ts",
-  "keywords": ["expo", "react-native", "pdf", "thumbnail"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TON_USERNAME/scrodo-pdf-thumbnail"
-  },
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "scrodo-pdf-thumbnail.podspec",
+    "react-native.config.js"
+  ],
+  "keywords": ["react-native", "pdf", "thumbnail"],
+  "author": "Scrodo",
   "license": "MIT",
   "peerDependencies": {
-    "expo": ">=50.0.0",
-    "react-native": ">=0.73.0"
-  },
-  "expo": {
-    "fyi": {}
+    "react-native": "*"
   }
 }

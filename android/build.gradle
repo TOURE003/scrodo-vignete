@@ -4,8 +4,8 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:8.3.0'
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
+    classpath 'com.android.tools.build:gradle:7.4.2'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
   }
 }
 
@@ -13,21 +13,20 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-  namespace "com.scrodo.pdfthumbnail"
-  compileSdkVersion 34
+  compileSdkVersion 33
 
   defaultConfig {
-    minSdkVersion 24
-    targetSdkVersion 34
+    minSdkVersion 21
+    targetSdkVersion 33
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_17
-    targetCompatibility JavaVersion.VERSION_17
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
   }
 
   kotlinOptions {
-    jvmTarget = '17'
+    jvmTarget = "1.8"
   }
 }
 
@@ -37,5 +36,5 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.facebook.react:react-native:+'
+  implementation "com.facebook.react:react-native:+"
 }

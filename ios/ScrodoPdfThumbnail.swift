@@ -3,8 +3,9 @@ import PDFKit
 import UIKit
 import React
 
-@objc(ScrodoPdfThumbnailModule)
-class ScrodoPdfThumbnailModule: NSObject {
+// IMPORTANT : le nom ici doit être identique à RCT_EXTERN_MODULE dans ScrodoPdfThumbnail.m
+@objc(ScrodoPdfThumbnail)
+class ScrodoPdfThumbnail: NSObject {
 
   @objc static func requiresMainQueueSetup() -> Bool { return false }
 
